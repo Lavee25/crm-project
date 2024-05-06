@@ -1,13 +1,13 @@
-import "./App.css";
-import Signup from "./pages/signup"
+import './App.css';
+import AppRouter from './router';
+
 function App() {
   return (
     <div className="App">
-      <div className="App-header">
-     
-    <Signup/>
+      <AppRouter/>
+    {/* <div className="App-header">
         
-      </div>
+      </div> */}
     </div>
   );
 }
