@@ -1,41 +1,208 @@
+import React from 'react';
+import {
+  AppBar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  IconButton,
+  Button,
+  Box,
+  Avatar,
+  Dialog,
+  DialogContent,
+  
+  
+} from '@mui/material';
+import {
+  Menu as MenuIcon,
+  Add as AddIcon,
+  FormatListBulleted,
+  Person,
+  Search as SearchIcon
+} from '@mui/icons-material';
+import MailIcon from '@mui/icons-material/Mail';
+import { styled, alpha } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import InputBase from '@mui/material/InputBase';
+import authHelper from '../helper/authhelper';
+import AddCustomer from '../pages/AddCustomer';
+//import CustomerList from '../pages/CustomerList';
+import { useNavigate } from 'react-router-dom';
 
-import { Box, styled, useMediaQuery, useTheme } from "@mui/material";
-
-// STYLED COMPONENTS
-const SideNav = styled("div")(({ theme, width }) => ({
-  zIndex: 91,
-  width: width,
-  overflow: "hidden",
-  position: "relative",
-  transition: "width 250ms ease",
-  background: theme.palette.background.default,
-  [theme.breakpoints.down("sm")]: {
-    top: 0,
-    left: 0,
-    bottom: 0,
-    position: "absolute"
-  }
+// Styles for search bar
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
 }));
 
-const SideNavOverlay = styled("div")(() => ({
-  zIndex: 90,
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-  background: "rgba(0, 0, 0, 0.74)"
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
-export default function MatxSidenav({ sx, open, children, toggleSidenav, width = "220px" }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+export default function SearchAppBar() {
+  const navigate=useNavigate();
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openModal, setOpenModal] = React.useState(false);
+  //const [openCustomerListModal, setOpenCustomerListModal] = React.useState(false);
+  const handleLogout = () => {
+    authHelper.removeToken();
+    window.location.href = '/adminLogin';
+  };
 
-  return (
-    <Box height="100%" display="flex">
-      <SideNav sx={sx} width={open || !isMobile ? width : "0px"}>
-        {children}
-      </SideNav>
+  const toggleDrawer = (newOpen) => () => {
+    setOpenDrawer(newOpen);
+  };
 
-      {open && isMobile && <SideNavOverlay onClick={toggleSidenav} />}
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const DrawerList = (
+    <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+      <ListItem disablePadding>
+          <ListItemButton>
+          <ListItemIcon>
+              <MailIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Inbox"  onClick={()=>navigate('/adminLogin/inbox')} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleOpenModal}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add Customer" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add Tasks" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="Task List" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding >
+          <ListItemButton onClick={()=>navigate('/adminLogin/inbox/customerList')}>
+           <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="Customer List" />
+          </ListItemButton>
+        </ListItem>
+      </List>
     </Box>
   );
-}
+
+  return (
+
+    <Box sx={{ flexGrow: 1 }}>
+    <AppBar position="static" sx={{ marginTop: '5px', marginBottom: '10px' }}>
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          sx={{ mr: 2 }}
+        >
+          <MenuIcon onClick={toggleDrawer(true)} />
+          <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+            {DrawerList}
+          </Drawer>
+        </IconButton>
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+
+        <Avatar sx={{ marginLeft: 'auto' }}>
+          <Person />
+        </Avatar>
+
+        <Link to="/logout" style={{ color: 'black',textDecoration: 'none' }}>
+          <Button variant="contained" onClick={handleLogout}>
+            LogOut
+          </Button>
+        </Link>
+      </Toolbar>
+    </AppBar>
+
+    <Dialog open={openModal} onClose={handleCloseModal}>
+      <DialogContent>
+        <AddCustomer />
+      </DialogContent>
+    </Dialog>
+
+
+    {/* <Dialog
+        open={openCustomerListModal}
+        onClose={() => setOpenCustomerListModal(false)}
+        fullWidth={true} // Adjusts the modal to take the full width of its container
+        maxWidth="md" // Can adjust to desired width (sm, md, lg, etc.)
+      >
+        <DialogTitle>Customer List</DialogTitle>
+        <DialogContent>
+          <CustomerList /> {/* Renders your CustomerList component 
+        </DialogContent>
+      </Dialog> */}
+  </Box>
+  
+  
+);
+};

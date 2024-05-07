@@ -1,12 +1,5 @@
 import '../css/log.css'
 import * as React from 'react';
-//import Avatar from '@mui/material/Avatar';
-//import Button from '@mui/material/Button';
-//import CssBaseline from '@mui/material/CssBaseline';
-//import TextField from '@mui/material/TextField';
-//import FormControlLabel from '@mui/material/FormControlLabel';
-//import Checkbox from '@mui/material/Checkbox';
-//import Link from '@mui/material/Link';
 import{
   Button,
   TextField,
@@ -17,37 +10,19 @@ import{
   Box} from '@mui/material';
 import  {useFormik}  from 'formik';
 import * as yup from 'yup';
-//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-//import Typography from '@mui/material/Typography';
-//import Container from '@mui/material/Container';
-//import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthService from '../services/AuthService';
 import authHelper from '../helper/authhelper';
 import signupImage from '../utils/sign up-07.jpg'
 const {useNavigate} =require('react-router-dom');
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//   
-  //    Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const validationSchema=yup.object({
     email: yup.string().min(1).required(),
     password: yup.string().min(6).max(20).required()
 })
 
 
-//const defaultTheme = createTheme();
+
 
 export default function SignIn() {
 

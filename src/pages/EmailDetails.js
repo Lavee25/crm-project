@@ -1,34 +1,73 @@
-import React from 'react'
-import {
-       Typography,
-       Card,
-       CardContent,
-       Grid,
-       Box
-} from '@mui/material';
-const EmailDetails = ({email}) => {
-  return (
-    <div>
+import React, { useState } from 'react';
+import { Card, CardContent, Typography, Box, Divider, Dialog, DialogContent } from '@mui/material';
+import PropTypes from 'prop-types';
+import AddTask from './AddTask';
+// Styled divider with a color and margin for better separation
+const CustomDivider = ({ ...props }) => (
+  <Divider sx={{ my: 2, bgcolor: 'primary.main' }} {...props} />
+);
 
-  <Box  sx={{display: 'flex',justifyContent: 'flex-end'}} > 
-    <Card sx={{ width: 900 ,backgroundColor: 'white', border: '1px solid black',textAlign:"left"}}>
-        <CardContent>
-              {/* <Typography sx={{ fontWeight: 'bold' ,fontStyle:"italic",textAlign:"center"}}>Student Profile </Typography><br></br> */}
-               <Grid container direction="column">
-              <Grid item > <Typography > {email.customer.first_name} {email.customer.last_name} </Typography></Grid>
-              {/* <Grid item > <Typography sx={{display: 'flex',justifyContent: 'flex-end'}}> {email.created_at}  </Typography></Grid> */}
-              {/* <Grid item > <Typography> {email.email}      </Typography></Grid>  */}
-              <Grid item > <Typography sx={{fontWeight:"bold"}}> {email.subject}  <Typography sx={{display: 'flex',justifyContent: 'flex-end'}}> {email.created_at}</Typography></Typography> 
-             </Grid>
-              <Grid item > <Typography>{email.body}   </Typography></Grid>
-              </Grid>
-               {/* <img src={student.profile?.image_url} alt="profile_pic" height={150} width={150}/>*/}
-        </CardContent>
-    </Card>
-  </Box>  
-   </div>
-  )
-}
+const EmailDetails = ({ email }) => {
+  // State to manage modal visibility
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Card sx={{ width: 900, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
+          <CardContent>
+          <Typography variant="h6" gutterBottom>
+              {email.subject}
+            </Typography>
+
+           
+            <Typography variant="subtitle1" color="text.secondary" onClick={handleClickOpen} sx={{color:'skyblue'}}>
+              From: {email.customer.first_name} ({email.email})
+            </Typography>
+
+          
+            <Typography variant="subtitle2" color="text.secondary">
+              Date: {email.created_at}
+            </Typography>
+
+           
+            <CustomDivider />
+
+           
+            <Typography variant="body1">{email.body}</Typography>
+          </CardContent>
+        </Card>
+      </Box>
+
+     
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+       
+        <DialogContent>
+        <AddTask emailId={email.id}/>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
+
+EmailDetails.propTypes = {
+  email: PropTypes.shape({
+    subject: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    customer: PropTypes.shape({
+      first_name: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
 
 export default EmailDetails;
-

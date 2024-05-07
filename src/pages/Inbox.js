@@ -1,11 +1,11 @@
 import React ,{useState,useEffect,useCallback}from 'react'
-import Navbar from '../components/Navbar';
+//import Navbar from '../components/Navbar';
 import EmailDetails from './EmailDetails';
 //import ContectUsService from '../services/InboxService';
 import axios from 'axios';
 import '../css/inbox.css';
 import{Card,CardContent,Box, Typography} from '@mui/material'
-import MatxSidenav from '../components/SideNavbar';
+import SearchAppBar  from  '../components/SideNavbar';
 
 
 
@@ -40,10 +40,10 @@ const Inbox = () => {
     }, [handleSubmit]);
 return (
      <>
-      <MatxSidenav/>
-      <Navbar/>
+      < SearchAppBar/>
+      {/* <Navbar/> */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end',  }}>
-        <Card sx={{ width: 900 ,height:50, backgroundColor: '#f0f0f0', borderRadius: '5px', border: '1px solid black'}}>
+        <Card sx={{ width: 933 ,height:50, borderRadius: '5px', }}>
         <CardContent>
          <Typography variant='h6' sx={{textAlign:'left'}}>Waiting for you.....</Typography>
         </CardContent></Card></Box>
