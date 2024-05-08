@@ -56,13 +56,7 @@ import{
         console.error('Error:', error.message);
         }}
   
-
-
-     
-
-     
-    
-  return (
+return (
     < div className='customer' >
       <ToastContainer/>
     

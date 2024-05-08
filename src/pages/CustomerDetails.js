@@ -3,9 +3,16 @@ import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper
 
 const CustomerDetails = ({ customerdata }) => {
   return (
-    <Box>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customer-details">
+    <Box
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center', 
+      height: '100vh',     
+    }}
+  >
+    <TableContainer component={Paper} sx={{maxWidth: 1000, backgroundColor: 'white'}}>
+      <Table aria-label="customer-details">
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={4} fontwaigth="bold">

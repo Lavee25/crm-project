@@ -124,7 +124,7 @@ export default function SearchAppBar() {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={()=>navigate('/admin/inbox/task-list')}>
             <ListItemIcon>
               <FormatListBulleted />
             </ListItemIcon>

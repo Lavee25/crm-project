@@ -9,6 +9,11 @@ import {
      import ContectUs from "./pages/ContectUs";
      import CustomerList from "./pages/CustomerList";
      import authHelper from "./helper/authhelper";
+     import CustomerEmail from "./pages/CustomerEmail";
+import TaskList from "./pages/TaskList";
+
+
+
  function AppRouter(){
   const isLoggedIn = authHelper.isAuthenticated();
     return(
@@ -23,7 +28,9 @@ import {
                <>
                 {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
                 <Route path="admin/inbox" element={<Inbox/>}/>
+                <Route path="admin/inbox/customer-email" element={<CustomerEmail/>}/>
                 <Route path="admin/inbox/customer-list" element={<CustomerList/>}/>
+                <Route path="admin/inbox/task-list" element={<TaskList/>}/>
              </>) : (
               <>
               {/* <Route path="/adminLogin/inbox" element={<Login/>}/> 

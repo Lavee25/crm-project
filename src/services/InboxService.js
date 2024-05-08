@@ -1,9 +1,9 @@
 
 import { APIService } from "./ApiService";
-const  ContectUsService = {
+const  InboxService = {
   postMessage,
   getEmail,
-  //login
+ getEmailById
 };
 
 function postMessage(data) {
@@ -12,9 +12,11 @@ function postMessage(data) {
 function getEmail() {
     return APIService.post("inbox/getemailCustomerData");
 }
-
+function getEmailById(id) {
+  return APIService.post(`inbox/getemailCustomerData/${id}`);
+}
 // function login(data) {
 //   return APIService.post("auth/UserLogin", data);
 // }
 
-export default ContectUsService;
+export default InboxService;
