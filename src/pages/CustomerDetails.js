@@ -14,8 +14,8 @@ const CustomerDetails = ({ customerdata }) => {
           </TableRow>
           <TableRow>
             <TableCell align="left">First Name</TableCell>
-            <TableCell align="left">Last Name</TableCell>
-            <TableCell align="left">Email</TableCell>
+             <TableCell align="left">Last Name</TableCell>
+            <TableCell align="left">Customer Email</TableCell>
             <TableCell align="left">Created At</TableCell>
           </TableRow>
         </TableHead>

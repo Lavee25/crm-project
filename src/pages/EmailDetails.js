@@ -24,13 +24,13 @@ const EmailDetails = ({ email }) => {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Card sx={{ width: 900, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
           <CardContent>
-          <Typography variant="h6" gutterBottom>
-              {email.subject}
-            </Typography>
 
            
             <Typography variant="subtitle1" color="text.secondary" onClick={handleClickOpen} sx={{color:'skyblue'}}>
-              From: {email.customer.first_name} ({email.email})
+              {email.customer.first_name} {email.customer.last_name} ({email.email})
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              {email.subject}
             </Typography>
 
           

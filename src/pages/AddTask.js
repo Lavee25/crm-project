@@ -29,7 +29,7 @@ import{
       }) 
   const AddTask= ({emailId}) => {
     const notify=()=>toast("Task added to this email successfully");
-    const notify1=()=>toast("All fields are required");
+    //const notify1=()=>toast("All fields are required");
     const formik = useFormik({
       initialValues:{
       task_details:"",

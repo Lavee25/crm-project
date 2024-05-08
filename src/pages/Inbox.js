@@ -4,7 +4,7 @@ import EmailDetails from './EmailDetails';
 //import ContectUsService from '../services/InboxService';
 import axios from 'axios';
 import '../css/inbox.css';
-import{Card,CardContent,Box, Typography} from '@mui/material'
+//import{Card,CardContent,Box, Typography} from '@mui/material'
 import SearchAppBar  from  '../components/SideNavbar';
 
 
@@ -42,11 +42,11 @@ return (
      <>
       < SearchAppBar/>
       {/* <Navbar/> */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end',  }}>
+      {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end',  }}>
         <Card sx={{ width: 933 ,height:50, borderRadius: '5px', }}>
         <CardContent>
          <Typography variant='h6' sx={{textAlign:'left'}}>Waiting for you.....</Typography>
-        </CardContent></Card></Box>
+        </CardContent></Card></Box> */}
      
       <div classname="inbox">
        {Array.isArray(emaildata) &&  emaildata.map((email)=>(

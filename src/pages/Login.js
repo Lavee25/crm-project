@@ -21,9 +21,6 @@ const validationSchema=yup.object({
     password: yup.string().min(6).max(20).required()
 })
 
-
-
-
 export default function SignIn() {
 
     const formik = useFormik({
@@ -41,9 +38,8 @@ const navigate=useNavigate();
       AuthService.login(formik.values).then(res_data => {
        console.log(res_data.data.adminToken);
        authHelper.setToken(res_data.data.adminToken);
-     
-     formik.resetForm();
-     navigate ('./inbox'); 
+       navigate ('/admin/inbox'); 
+        formik.resetForm();
      //notify2()
  }).catch((error)=>{
   //notify1(error)

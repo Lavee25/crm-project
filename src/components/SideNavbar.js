@@ -104,7 +104,7 @@ export default function SearchAppBar() {
           <ListItemIcon>
               <MailIcon/>
             </ListItemIcon>
-            <ListItemText primary="Inbox"  onClick={()=>navigate('/adminLogin/inbox')} />
+            <ListItemText primary="Inbox"  onClick={()=>navigate('/admin/inbox')} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -132,7 +132,7 @@ export default function SearchAppBar() {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding >
-          <ListItemButton onClick={()=>navigate('/adminLogin/inbox/customerList')}>
+          <ListItemButton onClick={()=>navigate('/admin/inbox/customer-list')}>
            <ListItemIcon>
               <FormatListBulleted />
             </ListItemIcon>
