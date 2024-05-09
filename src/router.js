@@ -11,6 +11,7 @@ import {
      import authHelper from "./helper/authhelper";
      import CustomerEmail from "./pages/CustomerEmail";
 import TaskList from "./pages/TaskList";
+import CustomerPage from "./pages/CustomerPage";
 
 
 
@@ -28,7 +29,8 @@ import TaskList from "./pages/TaskList";
                <>
                 {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
                 <Route path="admin/inbox" element={<Inbox/>}/>
-                <Route path="admin/inbox/customer-email" element={<CustomerEmail/>}/>
+                <Route path="admin/inbox/email/:id" element={<CustomerEmail/>}/>
+                {/* <Route path="admin/inbox/email/:id/customer" element={<CustomerPage/>}/> */}
                 <Route path="admin/inbox/customer-list" element={<CustomerList/>}/>
                 <Route path="admin/inbox/task-list" element={<TaskList/>}/>
              </>) : (

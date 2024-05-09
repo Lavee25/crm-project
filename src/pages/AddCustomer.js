@@ -26,7 +26,7 @@ import{
         
       }) 
   const AddCustomer = () => {
-    const notify=()=>toast("customer added successfully");
+    const notify=()=>toast("New customer added successfully");
 
     const formik = useFormik({
       initialValues:{

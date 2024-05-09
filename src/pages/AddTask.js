@@ -27,8 +27,8 @@ import{
         
         
       }) 
-  const AddTask= ({emailId}) => {
-    const notify=()=>toast("Task added to this email successfully");
+  const AddTask= ({Id}) => {
+    const notify=()=>toast(" New Task added to this email successfully");
     //const notify1=()=>toast("All fields are required");
     const formik = useFormik({
       initialValues:{
@@ -43,7 +43,7 @@ import{
      const handleSubmit=async()=>{
       
       try{
-         TaskService.AddNewTask(emailId,formik.values).then(res_data => {
+         TaskService.AddNewTask(Id,formik.values).then(res_data => {
           console.log(res_data);
           notify();
           formik.resetForm();

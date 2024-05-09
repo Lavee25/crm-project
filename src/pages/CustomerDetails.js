@@ -1,13 +1,20 @@
 import React from 'react';
 import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper,Box } from '@mui/material';
 
-const CustomerDetails = ({ customerdata }) => {
+const CustomerDetails = ({ customerdata,pageNumber,pageSize }) => {
+  const startIndex = (pageNumber - 1) * pageSize;
+   //startIndex=(1-1)*10  incase of first page
+   //startIndex =0
+   //firstIndex={startIndex + index+1}
+   //firstIndex={0+0+1}=1
+
   return (
     <Box
     sx={{
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center', 
+      //alignItems: 'center', 
+      backgroundColor: '#f7f7f7',
       height: '100vh',     
     }}
   >
@@ -15,20 +22,22 @@ const CustomerDetails = ({ customerdata }) => {
       <Table aria-label="customer-details">
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={4} fontwaigth="bold">
-              Customer Details
+            <TableCell align="left" colSpan={5} style={{ fontWeight: 'bold' }}>
+              Customer Details.
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="left">First Name</TableCell>
-             <TableCell align="left">Last Name</TableCell>
-            <TableCell align="left">Customer Email</TableCell>
-            <TableCell align="left">Created At</TableCell>
+             <TableCell align="left" style={{ fontWeight: 'bold' }}>Sr.No</TableCell> 
+            <TableCell align="left" style={{ fontWeight: 'bold' }}>First Name</TableCell>
+            <TableCell align="left" style={{ fontWeight: 'bold' }}>Last Name</TableCell>
+            <TableCell align="left"style={{ fontWeight: 'bold' }}>Customer Email</TableCell>
+            <TableCell align="left"style={{ fontWeight: 'bold' }}>Created At</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.isArray(customerdata) && customerdata.map((customer) => (
+          {Array.isArray(customerdata) && customerdata.map((customer,index) => (
             <TableRow key={customer.id}>
+              <TableCell align="left"> {startIndex + index+1}</TableCell> 
               <TableCell align="left">{customer.first_name}</TableCell>
               <TableCell align="left">{customer.last_name}</TableCell>
               <TableCell align="left">{customer.email}</TableCell>

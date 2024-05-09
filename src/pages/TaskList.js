@@ -13,13 +13,13 @@ const TaskList = () => {
   const[taskdata,setTaskdata]=useState([]);
   const [page,setPage] = useState(1);             
   const [totalRecords, setTotalRecords] = useState(0);
-const[size,setSize]=useState(0);
+  const[size,setSize]=useState(10);
 
   const handleSubmit =useCallback(async()=>{
     try{
     
-    const response=await axios.get(`http://localhost:8000/api/v1/task/getTasks?page=${page}`)
-    console.log(response);
+  const response=await axios.get(`http://localhost:8000/api/v1/task/getTasks?page=${page}`)
+  console.log(response);
   setTaskdata(response.data.taskdata)
   setTotalRecords(response.data.totalRecords)
   setSize(response.data.size);
@@ -43,11 +43,13 @@ const[size,setSize]=useState(0);
       };
 
 return (
-     <>
+  <>
      <SearchAppBar/>
-     <div >
     
     
+   
+  <TaskDetails taskdata={taskdata} pageNumber={page} pageSize={size}/>
+ 
      <Button
           onClick={handlePreviousPage}
           variant='contained'
@@ -58,16 +60,14 @@ return (
         <Button
           variant='contained'
           onClick={handleNextPage}
-          disabled={page * 5 >= totalRecords} // Disable if on the last page
+          disabled={page * 10 >= totalRecords} // Disable if on the last page
         >
           Next Page
         </Button>
      
       
        
-        <TaskDetails taskdata={taskdata} />
-    </div>
-     
+   
     
     </>
   )

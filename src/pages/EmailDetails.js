@@ -8,14 +8,17 @@ const CustomDivider = ({ ...props }) => (
 );
 const EmailDetails = ({ email }) => {
   const navigate=useNavigate();
-  
+  const bodyPreview =
+    email.body.length > 100
+      ? `${email.body.substring(0, 100)}...`
+      : email.body;
 
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Card sx={{ width: 900, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
+        <Card sx={{ width: 900,height:170, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
           <CardContent>
-            <Typography variant="subtitle1" color="text.secondary" onClick={()=>navigate('/admin/inbox/customer-email')} sx={{color:'skyblue'}}>
+            <Typography variant="subtitle1" color="text.secondary" onClick={()=>navigate(`/admin/inbox/email/${email.id}`)} sx={{color:'skyblue',cursor:'pointer'}}>
               {email.customer.first_name} {email.customer.last_name} ({email.email})
             </Typography>
             <Typography variant="h6" gutterBottom>
@@ -24,14 +27,11 @@ const EmailDetails = ({ email }) => {
             <Typography variant="subtitle2" color="text.secondary">
               Date: {email.created_at}
             </Typography>
-          <CustomDivider />
-          <Typography variant="body1">{email.body}</Typography>
+           <CustomDivider />
+          <Typography variant="body1">{bodyPreview}</Typography>
           </CardContent>
         </Card>
       </Box>
-
-     
-    
     </>
   );
 };
