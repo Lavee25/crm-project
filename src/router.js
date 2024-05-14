@@ -10,8 +10,12 @@ import {
      import CustomerList from "./pages/CustomerList";
      import authHelper from "./helper/authhelper";
      import CustomerEmail from "./pages/CustomerEmail";
-import TaskList from "./pages/TaskList";
+     import TaskList from "./pages/TaskList";
+     import ArchiveEmails from "./pages/ArchiveEmails";
+     import ParentComponent from "./pages/CustomerPageParent"
 import CustomerPage from "./pages/CustomerPage";
+    
+    //import CustomerPage from "./pages/CustomerPage";
 
 
 
@@ -22,13 +26,16 @@ import CustomerPage from "./pages/CustomerPage";
         <BrowserRouter>
            <Routes>
              <Route path="/"element={<ContectUs/>}/>
-             <Route path="*" element={<Login/>}/>
+             {/* <Route path="*" element={<Login/>}/> */}
              <Route path="/admin/login" element={<Login/>}/>
              {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
              {isLoggedIn ? (
                <>
                 {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
                 <Route path="admin/inbox" element={<Inbox/>}/>
+                {/* <Route path="/admin/inbox/customer" element={<ParentComponent/>}/> */}
+                <Route path="admin/inbox/customer" element={<ParentComponent/>}/>
+                <Route path="admin/inbox/archive-emails" element={<ArchiveEmails/>}/>
                 <Route path="admin/inbox/email/:id" element={<CustomerEmail/>}/>
                 {/* <Route path="admin/inbox/email/:id/customer" element={<CustomerPage/>}/> */}
                 <Route path="admin/inbox/customer-list" element={<CustomerList/>}/>

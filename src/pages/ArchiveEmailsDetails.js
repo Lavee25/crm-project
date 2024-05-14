@@ -1,10 +1,8 @@
 import React, { useState }  from 'react';
 import { Card, CardContent, Typography, Box, Divider, } from '@mui/material';
 //import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
-import ArchiveIcon from '@mui/icons-material/Archive';
-//import { ToastContainer, toast } from 'react-toastify';
-//import 'react-toastify/dist/ReactToastify.css';
-//import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveTwoTone';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+//import UnarchiveTwoToneIcon from '@mui/icons-material/UnarchiveTwoTone';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -17,18 +15,15 @@ const CustomDivider = ({ ...props }) => (
 
 const EmailDetails = ({ email,onRemove }) => {
 const[emailStatus,setEmailStatus]=useState(email.status);
-
-
   const handleClick = async () => {
     try {
       //const newStatus = emailStatus === 'false' ? 'true' ;
       const newStatus=!emailStatus;
       const response = await axios.patch(`http://localhost:8000/api/v1/inbox/ChangeStatus/${email.id}`, { status: newStatus });
-    if (response.status === 200) {
+
+      if (response.status === 200) {
         setEmailStatus(newStatus);
-        // Update the state to reflect the new status
-        onRemove(email.id)  
-       
+        onRemove(email.id) // Update the state to reflect the new status
       }
     } catch (error) {
       console.error('Error updating email status:', error);
@@ -43,7 +38,6 @@ const[emailStatus,setEmailStatus]=useState(email.status);
 
   return (
     <>
-   
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Card sx={{ width: 900,height:200, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
          
@@ -53,9 +47,10 @@ const[emailStatus,setEmailStatus]=useState(email.status);
            right:10, 
           }}
           >
-          <Tooltip title="Archive" placement="right">
-          <ArchiveIcon
-            onClick={() => handleClick()}
+          <Tooltip title="Move to Inbox" placement="right">   
+        
+          <UnarchiveIcon
+             onClick={() => handleClick()}
             sx={{ cursor: 'pointer' }}
             />
             </Tooltip>

@@ -14,8 +14,6 @@ import {
   Avatar,
   Dialog,
   DialogContent,
-  
-  
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -74,10 +72,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
+  //console.log(props)
+  const {onSearchKeyPress} = props;
+  console.log("Props",onSearchKeyPress);
   const navigate=useNavigate();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
+  const[searchQuery,setSearchQuery]=React.useState("");
+  //const [name,setName]= React.useState('');
+ 
   //const [openCustomerListModal, setOpenCustomerListModal] = React.useState(false);
   const handleLogout = () => {
     authHelper.removeToken();
@@ -95,7 +99,13 @@ export default function SearchAppBar() {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
+  const handleSearchKeyPress  = (e) => {
+    if (e.key === 'Enter') {
+      onSearchKeyPress(searchQuery);
+      //console.log(typeof onSearch)
+      navigate(`/admin/inbox/customer?name=${searchQuery}`);
+    }
+  };
   const DrawerList = (
     <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
@@ -160,15 +170,17 @@ export default function SearchAppBar() {
             {DrawerList}
           </Drawer>
         </IconButton>
-
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
+         <Search >
+          <SearchIconWrapper  >
+          <SearchIcon  />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-          />
+          placeholder="Search…"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleSearchKeyPress}
+          //onKeyDown={(e) => e.key === 'Enter' && handleSearchKeyPress(searchQuery)}
+          value={searchQuery}
+      />
         </Search>
 
         <Avatar sx={{ marginLeft: 'auto' }}>

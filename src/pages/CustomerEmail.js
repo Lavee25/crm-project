@@ -1,5 +1,5 @@
 import React, { useState,useCallback,useEffect } from 'react';
-import { Card, CardContent, Typography, Box, Divider, Dialog, DialogContent} from '@mui/material';
+import { Card, CardContent, Typography,Button, Box, Divider, Dialog, DialogContent} from '@mui/material';
 //import PropTypes from 'prop-types';
 import AddTask from './AddTask';
 import SearchAppBar from '../components/SideNavbar';
@@ -38,7 +38,7 @@ const [email, setEmail] = useState({
     try{
         //console.log(emailId);
     const response=await axios.get(`http://localhost:8000/api/v1/inbox/getemailCustomerData/${id}`)
-    console.log(response);
+    //console.log(response);
    setEmail(response.data.data)
    //console.log(email)
 
@@ -85,7 +85,7 @@ const [email, setEmail] = useState({
         alignItems: 'flex-end', // Aligns the content to the bottom
          // Ensures text is aligned to the right
         }}>
-          <Typography variant="h6"  onClick={handleClickOpen} sx={{ color: 'skyblue',cursor:'pointer' }}>Add Task</Typography>
+          <Button onClick={handleClickOpen} sx={{ color: 'skyblue',cursor:'pointer' }}>New Task</Button>
           </Box>
            </CardContent>
         </Card>

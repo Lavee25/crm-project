@@ -1,51 +1,46 @@
-// import React from 'react'
-// import  SearchAppBar from '../components/SideNavbar';
-// import { Card, CardContent, Typography, Box, Divider, Dialog, DialogContent} from '@mui/material';
+import React,{useState,useEffect} from 'react'
+//import { useParams } from 'react-router-dom';
+import axios from 'axios'
+//import { useParams } from 'react-router-dom';
+//import { ToastContainer, toast } from 'react-toastify';
+import CustomerPageDetails from '../pages/CustomerPageDetails';
+//import SearchIcon from '@mui/icons-material/Search';
+//import CustomerPageDetails from './CustomerPageDetails';
+//import SearchAppBar from '../components/SideNavbar';
 
-// const CustomDivider = ({ ...props }) => (
-//     <Divider sx={{ my: 2, bgcolor: 'primary.main' }} {...props} />
-//   );
-// const CustomerPage = () => {
-//   return (
-//     <div>
-//    <SearchAppBar/>
-//    {/* <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-//         <Card sx={{ width: 500,height:450, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7'
-//     }}>
-//           <CardContent>
-//             <div>
-//              <Typography variant="subtitle1" color="text.secondary" >
-//                 {email.customer.first_name} {email.customer.last_name} 
-//              </Typography>
-//              {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
-//              {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
-//              <Typography variant="subtitle1" color="text.secondary" onClick={()=>navigate(`/admin/inbox/email/${id}/customer`)} sx={{color:'skyblue',cursor:'pointer'}}>
-//                 from:{email.email} 
-//              </Typography>
-            
-//           <Typography variant="h6">{email.subject}</Typography>
-//           <Typography variant="subtitle2" color="text.secondary">
-//               Date: {email.created_at}
-//             </Typography>
-//           <CustomDivider />
-//           <Typography variant="body1">{email.body}</Typography>
-//           </div>
-//           <Box  sx={{
-//         alignSelf: 'flex-end', // Aligns to the end within the flex column
-//         textAlign: 'right',
-//         display: 'flex',
-//         justifyContent: 'flex-end', // Aligns the content to the right
-//         alignItems: 'flex-end', // Aligns the content to the bottom
-//          // Ensures text is aligned to the right
-//         }}>
-//           <Typography variant="h6"  onClick={handleClickOpen} sx={{ color: 'skyblue',cursor:'pointer' }}>Add Task</Typography>
-//           </Box>
-//            </CardContent>
-//         </Card>
-//       </Box>
-//        */}
-//     </div>
-//   )
-// }
+const CustomerPage = ({SearchValue}) => {
+   
+    const[customerdata,setCustomerdata]=useState([]);
+    //const{params}=useParams();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/customer/getCustomerbyname?name=${SearchValue}`);
+        setCustomerdata(response.data.customerData);
+      } catch (error) {
+        console.error("Error fetching customer data:", error.message);
+      }
+    };
 
-// export default CustomerPage
+     //if (searchValue.trim() !== '') {
+      fetchData();
+    //} else {
+      //setCustomerdata([]); // Reset customer data if searchValue is empty
+    //}
+   }, [SearchValue]);
+  return (
+      <>
+      
+      {customerdata.map((customer)=>(
+        <CustomerPageDetails
+         key={customer.id}
+         customer={customer}
+      
+        />))} 
+    
+</>
+  )
+}
+
+export default CustomerPage;
