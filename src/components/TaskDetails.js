@@ -2,7 +2,10 @@ import React from 'react';
 import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper,Box } from '@mui/material';
 
 const TaskDetails = ({ taskdata,pageNumber,pageSize }) => {
-    const startIndex=(pageNumber-1)*pageSize;
+  let startIndex=0;
+if(pageNumber>1){
+    startIndex=(pageNumber-1)*pageSize;
+}
   return (
     
       <Box

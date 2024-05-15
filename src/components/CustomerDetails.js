@@ -2,7 +2,14 @@ import React from 'react';
 import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper,Box } from '@mui/material';
 
 const CustomerDetails = ({ customerdata,pageNumber,pageSize }) => {
-  const startIndex = (pageNumber - 1) * pageSize;
+  let startIndex = 0;
+
+  // Calculate startIndex only if pageNumber is greater than 1
+  if (pageNumber > 1) {
+    startIndex = (pageNumber - 1) * pageSize;
+  }
+
+  //const startIndex = (pageNumber - 1) * pageSize;
    //startIndex=(1-1)*10  incase of first page
    //startIndex =0
    //firstIndex={startIndex + index+1}

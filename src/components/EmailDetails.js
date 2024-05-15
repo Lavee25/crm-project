@@ -21,12 +21,10 @@ const[emailStatus,setEmailStatus]=useState(email.status);
 
   const handleClick = async () => {
     try {
-      //const newStatus = emailStatus === 'false' ? 'true' ;
       const newStatus=!emailStatus;
       const response = await axios.patch(`http://localhost:8000/api/v1/inbox/ChangeStatus/${email.id}`, { status: newStatus });
     if (response.status === 200) {
         setEmailStatus(newStatus);
-        // Update the state to reflect the new status
         onRemove(email.id)  
        
       }
@@ -36,6 +34,7 @@ const[emailStatus,setEmailStatus]=useState(email.status);
   };
 
   const navigate=useNavigate();
+  
   const bodyPreview =
     email.body.length > 100
       ? `${email.body.substring(0, 100)}...`

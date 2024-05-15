@@ -58,7 +58,7 @@ import{
   
 return (
     < div className='customer' >
-      <ToastContainer/>
+      <ToastContainer autoClose={2000}/>
     
     <div style={{textAlign:"center"}}>
      

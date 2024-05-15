@@ -1,12 +1,13 @@
 import React ,{useState,useEffect,useCallback}from 'react'
 
-import CustomerDetails from '../pages/CustomerDetails';
+import CustomerDetails from '../components/CustomerDetails';
 //import ContectUsService from '../services/InboxService';
 import axios from 'axios';
 //import '../css/inbox.css';
 import{Button} from '@mui/material'
 //import SearchAppBar  from  '../components/SideNavbar';
 import SearchAppBar from '../components/SideNavbar';
+//import { Search } from '@mui/icons-material';
 
 
 const CustomerList = () => {
@@ -14,8 +15,10 @@ const CustomerList = () => {
   const[page,setPage]=useState(1);
   const[totalRecords,setTotalRecords]=useState(0);
   const[size,setSize]=useState(10);
+  const[searchQuery,setSearchQuery]=React.useState('');
+
   
-  const handleSubmit =useCallback(async()=>{
+  const fetchCustomerData =useCallback(async()=>{
     try{
     
     const response=await axios.get(`http://localhost:8000/api/v1/customer/getCustomers?page=${page}`);
@@ -34,10 +37,51 @@ const CustomerList = () => {
     }
    
   },[page]);
-   useEffect(() => {
-     handleSubmit(); 
-    }, [handleSubmit]);
- 
+
+  const fetchSearchCustomer=useCallback(async()=>{
+    try{
+    
+    const response=await axios.get(`http://localhost:8000/api/v1/customer/getCustomerbyname?name=${searchQuery}&page=${page}`);
+    //console.log(response);
+    if(Array.isArray(response.data.customerData)){
+      setCustomerdata(response.data.customerData)
+      setTotalRecords(response.data.totalRecords);
+      setSize(response.data.size)
+     
+    }
+  else {
+    console.error("Data is  not Array");
+  }
+  }catch(error){
+      console.error("error:", error.message);
+    }
+   
+  },[searchQuery,page]);
+
+
+
+
+
+  useEffect(() => {
+    if (searchQuery) {
+      fetchSearchCustomer();
+       }
+    else {
+      fetchCustomerData();
+    }
+  }, [fetchSearchCustomer, fetchCustomerData, searchQuery]);
+
+const handleSearch=(value)=>{
+    setSearchQuery(value)
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+    if (searchQuery.trim() === '') {
+        fetchCustomerData();
+      }
+    }
+  };
     const handleNextPage=()=>{
       setPage((prevPage)=>prevPage+1);
      }
@@ -51,7 +95,7 @@ const CustomerList = () => {
     
 return (
      <>
-     <SearchAppBar/>
+     <SearchAppBar onSearch={handleSearch} onKeyPress={handleKeyPress} />
  
     
      <CustomerDetails customerdata={customerdata} pageNumber={page} pageSize={size} />

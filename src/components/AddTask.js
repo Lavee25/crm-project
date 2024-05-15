@@ -34,16 +34,23 @@ import{
       initialValues:{
       task_details:"",
       due_date:null,
+      //created_at: newDate.getHours()
      },
      
       validationSchema,
     })
     
-    //const navigate=useNavigate();
+   
      const handleSubmit=async()=>{
       
       try{
-         TaskService.AddNewTask(Id,formik.values).then(res_data => {
+        const formattedValues = {
+          ...formik.values,
+          due_date: formik.values.due_date ? formik.values.due_date.toISOString().substring(0, 10) : null
+        };
+        
+         TaskService.AddNewTask(Id,formattedValues).then(res_data => {
+          console.log(formik.values);
           console.log(res_data);
           notify();
           formik.resetForm();
@@ -64,7 +71,7 @@ import{
     
   return (
     < div  >
-      <ToastContainer/>
+      <ToastContainer autoClose={2000}/>
     
     <div style={{textAlign:"center"}}>
      
@@ -100,13 +107,14 @@ import{
                       value={formik.values.due_date } // Pass the value from formik
                       onChange={(date) => formik.setFieldValue('due_date', date)} 
                       onBlur={formik.handleBlur}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          error={formik.touched.due_date && Boolean(formik.errors.due_date)}
-                          helperText={formik.touched.due_date && formik.errors.due_date}
-                        />
-                      )}/>
+                      // renderInput={(params) => (
+                      //   <TextField
+                      //     {...params}
+                      //     error={formik.touched.due_date && Boolean(formik.errors.due_date)}
+                      //     helperText={formik.touched.due_date && formik.errors.due_date}
+                      //   />
+                      // )}
+                      />
                    </LocalizationProvider>
                 </Grid> 
                 <br></br>

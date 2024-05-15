@@ -4,7 +4,7 @@ import React ,{useState,useEffect,useCallback}from 'react'
 //import ContectUsService from '../services/InboxService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ArchiveEmailsDetails from './ArchiveEmailsDetails';
+import ArchiveEmailsDetails from '../components/ArchiveEmailsDetails';
 import axios from 'axios';
 import '../css/inbox.css';
 //import{Card,CardContent,Box, Typography} from '@mui/material'

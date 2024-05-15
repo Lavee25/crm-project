@@ -27,7 +27,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import InputBase from '@mui/material/InputBase';
 import authHelper from '../helper/authhelper';
-import AddCustomer from '../pages/AddCustomer';
+import AddCustomer from './AddCustomer';
 //import CustomerList from '../pages/CustomerList';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,14 +72,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default function SearchAppBar(props) {
+export default function SearchAppBar({onSearch,onKeyPress}) {
   //console.log(props)
-  const {onSearchKeyPress} = props;
-  console.log("Props",onSearchKeyPress);
+  //const {onSearchKeyPress} = props;
+ // console.log("Props",onSearchKeyPress);
   const navigate=useNavigate();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
-  const[searchQuery,setSearchQuery]=React.useState("");
+  // const[searchQuery,setSearchQuery]=React.useState("");
   //const [name,setName]= React.useState('');
  
   //const [openCustomerListModal, setOpenCustomerListModal] = React.useState(false);
@@ -99,13 +99,7 @@ export default function SearchAppBar(props) {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  const handleSearchKeyPress  = (e) => {
-    if (e.key === 'Enter') {
-      onSearchKeyPress(searchQuery);
-      //console.log(typeof onSearch)
-      navigate(`/admin/inbox/customer?name=${searchQuery}`);
-    }
-  };
+  
   const DrawerList = (
     <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
@@ -152,6 +146,26 @@ export default function SearchAppBar(props) {
       </List>
     </Box>
   );
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const handleSearchKeyPress = (e) => {
+    
+    const searchValue = e.target.value.trim();
+    
+    if (e.key === 'Enter') {
+      //if(onSearch && searchValue) {
+        //console.log('Calling onSearch function');
+        onSearch(searchValue);
+        if(searchValue===''){
+          onSearch(onKeyPress)
+        }
+       //console.log(searchValue)
+    // } else {
+      //  console.log('onSearch function not provided or search value is empty');
+    
+    }
+  }
+
 
   return (
 
@@ -175,12 +189,12 @@ export default function SearchAppBar(props) {
           <SearchIcon  />
           </SearchIconWrapper>
           <StyledInputBase
-          placeholder="Search…"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleSearchKeyPress}
-          //onKeyDown={(e) => e.key === 'Enter' && handleSearchKeyPress(searchQuery)}
-          value={searchQuery}
-      />
+           placeholder="Search…"
+           value={searchQuery}
+           onChange={(e) => setSearchQuery(e.target.value)}
+           onKeyDown={handleSearchKeyPress}
+           
+         />
         </Search>
 
         <Avatar sx={{ marginLeft: 'auto' }}>

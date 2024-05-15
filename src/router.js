@@ -12,10 +12,9 @@ import {
      import CustomerEmail from "./pages/CustomerEmail";
      import TaskList from "./pages/TaskList";
      import ArchiveEmails from "./pages/ArchiveEmails";
-     import ParentComponent from "./pages/CustomerPageParent"
-import CustomerPage from "./pages/CustomerPage";
-    
-    //import CustomerPage from "./pages/CustomerPage";
+     // import ParentComponent from "./pages/CustomerPageParent"
+     //import CustomerPage from "./pages/CustomerPage";
+     //import CustomerPage from "./pages/CustomerPage";
 
 
 
@@ -34,12 +33,13 @@ import CustomerPage from "./pages/CustomerPage";
                 {/* <Route path="/adminLogin/inbox" element={<Inbox/>}/>  */}
                 <Route path="admin/inbox" element={<Inbox/>}/>
                 {/* <Route path="/admin/inbox/customer" element={<ParentComponent/>}/> */}
-                <Route path="admin/inbox/customer" element={<ParentComponent/>}/>
+                {/* <Route path="admin/inbox/customer" element={<ParentComponent/>}/> */}
                 <Route path="admin/inbox/archive-emails" element={<ArchiveEmails/>}/>
                 <Route path="admin/inbox/email/:id" element={<CustomerEmail/>}/>
                 {/* <Route path="admin/inbox/email/:id/customer" element={<CustomerPage/>}/> */}
                 <Route path="admin/inbox/customer-list" element={<CustomerList/>}/>
                 <Route path="admin/inbox/task-list" element={<TaskList/>}/>
+                
              </>) : (
               <>
               {/* <Route path="/adminLogin/inbox" element={<Login/>}/> 
@@ -47,7 +47,7 @@ import CustomerPage from "./pages/CustomerPage";
                <Route path="/logout" element={<Login/>}/>
                </>)}
             </Routes>
-        </BrowserRouter>
+       </BrowserRouter>
       
       </>
     )

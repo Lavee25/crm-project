@@ -1,6 +1,6 @@
 import React ,{useState,useEffect,useCallback}from 'react'
 //import Navbar from '../components/Navbar';
-import EmailDetails from './EmailDetails';
+import EmailDetails from '../components/EmailDetails';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -11,47 +11,69 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Inbox = ({onSearch}) => {
+const Inbox = () => {
   const[emaildata,setEmaildata]=useState([]);
-  // const removeEmail = (emailId) => {
-  //   setEmails((prevEmails) => prevEmails.filter((email) => email.id !== emailId));
-  // };
+  const[searchQuery,setSearchQuery]=React.useState('');
+ 
   const removeEmail = (emailId) => {
-    setEmaildata((prevData) => prevData.filter((email) => email.id !== emailId));
+    setEmaildata((prevData) => prevData.filter((email) => email.id!== emailId));
     toast('Move to Archive');
   };
   const navigate=useNavigate();
 
-  const handleSubmit =useCallback(async()=>{
-    try{
-    const response=await axios.get("http://localhost:8000/api/v1/inbox/getemailCustomerData")
-    if(Array.isArray(response.data.data)){
-      setEmaildata(response.data.data)
-
+  const fetchEmailData = useCallback(async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/v1/inbox/getemailCustomerData");
+      if (Array.isArray(response.data.data)) {
+        setEmaildata(response.data.data);
+      } else {
+        console.error("Data is not an array");
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
     }
-  else {
-    console.error("Data is  not Array");
+  }, []);
+
+  const fetchSearchEmail = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/inbox/getemailCustomerDatabyEmail?email=${searchQuery}`);
+      if (Array.isArray(response.data.data)) {
+        setEmaildata(response.data.data);
+      } else {
+        console.error("Data is not an array");
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      fetchSearchEmail();
+      if(!searchQuery){
+        fetchEmailData();
+      }
+    } else {
+      fetchEmailData();
+    }
+  }, [fetchSearchEmail, fetchEmailData, searchQuery]);
+
+  const handleSearch=(value)=>{
+    setSearchQuery(value)
   }
-  }catch(error){
-      console.error("error:", error.message);
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+    if (searchQuery.trim() === '') {
+        fetchEmailData();
+      }
     }
-   
-  },[]);
-   useEffect(() => {
-     handleSubmit(); 
-    }, [handleSubmit]);
-
-    // const handleSearch = useCallback((searchQuery) => {
-    //   console.log("Search query:", searchQuery);
-    //   navigate(`/admin/inbox/customer?name=${searchQuery}`);
-    // }, [navigate]);
-    //  const handleSearch = useCallback((searchQuery) => {
-    //   console.log("Search query:", searchQuery);
-    //   navigate(`/admin/inbox/customer?search=${searchQuery}`);
-    //  }, [navigate]);
+  };
+  
+  
 return (
      <>
-      < SearchAppBar onSearchKeyPress={onSearch} />
+      < SearchAppBar onSearch={handleSearch} onKeyPress={handleKeyPress} />
       <ToastContainer
       autoClose={2000}/>
       <Button
@@ -64,17 +86,16 @@ return (
       
       onClick={()=>navigate('/admin/inbox/archive-emails')}>
        Archive Emails</Button>
-      <div classname="inbox">
-        
-          {Array.isArray(emaildata) &&  emaildata.map((email)=>(
+    
+    
+     {Array.isArray(emaildata) &&  emaildata.map((email)=>(
         <EmailDetails
-        
-        key={email.id}
+         key={email.id}
         email={email}
-       onRemove={removeEmail}
+        onRemove={removeEmail}
         />))}
         
-    </div>
+    {/* </div> */}
     
     </>
   )

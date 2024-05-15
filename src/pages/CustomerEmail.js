@@ -1,7 +1,7 @@
 import React, { useState,useCallback,useEffect } from 'react';
 import { Card, CardContent, Typography,Button, Box, Divider, Dialog, DialogContent} from '@mui/material';
 //import PropTypes from 'prop-types';
-import AddTask from './AddTask';
+import AddTask from '../components/AddTask';
 import SearchAppBar from '../components/SideNavbar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
