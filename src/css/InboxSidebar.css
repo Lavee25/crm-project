@@ -1,0 +1,24 @@
+
+.inbox-container {
+  display: flex;
+}
+
+.inbox-sidebar {
+  width: 200px; /* Adjust width as needed */
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.email-list {
+  flex: 1;
+  padding: 20px;
+  /* Adjust styles as needed */
+}
+
+.full-height-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}

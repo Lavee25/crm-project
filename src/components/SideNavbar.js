@@ -14,13 +14,15 @@ import {
   Avatar,
   Dialog,
   DialogContent,
+  Tooltip,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
   Add as AddIcon,
   FormatListBulleted,
   Person,
-  Search as SearchIcon
+  Search as SearchIcon,
+
 } from '@mui/icons-material';
 import MailIcon from '@mui/icons-material/Mail';
 import { styled, alpha } from '@mui/material/styles';
@@ -28,7 +30,7 @@ import { Link } from 'react-router-dom';
 import InputBase from '@mui/material/InputBase';
 import authHelper from '../helper/authhelper';
 import AddCustomer from './AddCustomer';
-//import CustomerList from '../pages/CustomerList';
+
 import { useNavigate } from 'react-router-dom';
 
 // Styles for search bar
@@ -72,17 +74,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-export default function SearchAppBar({onSearch,onKeyPress}) {
-  //console.log(props)
-  //const {onSearchKeyPress} = props;
- // console.log("Props",onSearchKeyPress);
-  const navigate=useNavigate();
+export default function SearchAppBar({ onSearch, onKeyPress }) {
+
+  const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
-  // const[searchQuery,setSearchQuery]=React.useState("");
-  //const [name,setName]= React.useState('');
- 
-  //const [openCustomerListModal, setOpenCustomerListModal] = React.useState(false);
+
+
   const handleLogout = () => {
     authHelper.removeToken();
     window.location.href = '/adminLogin';
@@ -99,16 +97,17 @@ export default function SearchAppBar({onSearch,onKeyPress}) {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  
+
+
   const DrawerList = (
     <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-      <ListItem disablePadding>
+        <ListItem disablePadding>
           <ListItemButton>
-          <ListItemIcon>
-              <MailIcon/>
+            <ListItemIcon>
+              <MailIcon />
             </ListItemIcon>
-            <ListItemText primary="Inbox"  onClick={()=>navigate('/admin/inbox')} />
+            <ListItemText primary="Inbox" onClick={() => navigate('/admin/inbox')} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -128,7 +127,7 @@ export default function SearchAppBar({onSearch,onKeyPress}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton onClick={()=>navigate('/admin/inbox/task-list')}>
+          <ListItemButton onClick={() => navigate('/admin/inbox/task-list')}>
             <ListItemIcon>
               <FormatListBulleted />
             </ListItemIcon>
@@ -136,8 +135,8 @@ export default function SearchAppBar({onSearch,onKeyPress}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding >
-          <ListItemButton onClick={()=>navigate('/admin/inbox/customer-list')}>
-           <ListItemIcon>
+          <ListItemButton onClick={() => navigate('/admin/inbox/customer-list')}>
+            <ListItemIcon>
               <FormatListBulleted />
             </ListItemIcon>
             <ListItemText primary="Customer List" />
@@ -149,20 +148,17 @@ export default function SearchAppBar({onSearch,onKeyPress}) {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const handleSearchKeyPress = (e) => {
-    
+
     const searchValue = e.target.value.trim();
-    
+
     if (e.key === 'Enter') {
-      //if(onSearch && searchValue) {
-        //console.log('Calling onSearch function');
-        onSearch(searchValue);
-        if(searchValue===''){
-          onSearch(onKeyPress)
-        }
-       //console.log(searchValue)
-    // } else {
-      //  console.log('onSearch function not provided or search value is empty');
-    
+
+      onSearch(searchValue);
+      if (searchValue === '') {
+        onSearch(onKeyPress)
+      }
+
+
     }
   }
 
@@ -170,65 +166,53 @@ export default function SearchAppBar({onSearch,onKeyPress}) {
   return (
 
     <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static" sx={{ marginTop: '5px', marginBottom: '10px' }}>
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon onClick={toggleDrawer(true)} />
-          <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
-            {DrawerList}
-          </Drawer>
-        </IconButton>
-         <Search >
-          <SearchIconWrapper  >
-          <SearchIcon  />
-          </SearchIconWrapper>
-          <StyledInputBase
-           placeholder="Search…"
-           value={searchQuery}
-           onChange={(e) => setSearchQuery(e.target.value)}
-           onKeyDown={handleSearchKeyPress}
-           
-         />
-        </Search>
+      <AppBar position="static" sx={{ marginTop: '5px', marginBottom: '10px' }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon onClick={toggleDrawer(true)} />
+            <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+              {DrawerList}
+            </Drawer>
+          </IconButton>
+          <Search >
+            <SearchIconWrapper  >
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyPress}
 
-        <Avatar sx={{ marginLeft: 'auto' }}>
-          <Person />
-        </Avatar>
+            />
+          </Search>
+          <Tooltip title="Account&Settings" placement="right">
+            <Avatar sx={{ marginLeft: 'auto',cursor: 'pointer' }} >
+              <Person />
+            </Avatar>
+          </Tooltip>
+          <Link to="/logout" style={{ color: 'black', textDecoration: 'none' }}>
+            <Button variant="contained" color="success" size="small" onClick={handleLogout}>
+              LogOut
+            </Button>
+          </Link>
+        </Toolbar>
+      </AppBar>
+  
 
-        <Link to="/logout" style={{ color: 'black',textDecoration: 'none' }}>
-          <Button variant="contained" onClick={handleLogout}>
-            LogOut
-          </Button>
-        </Link>
-      </Toolbar>
-    </AppBar>
-
-    <Dialog open={openModal} onClose={handleCloseModal}>
-      <DialogContent>
-        <AddCustomer />
-      </DialogContent>
-    </Dialog>
-
-
-    {/* <Dialog
-        open={openCustomerListModal}
-        onClose={() => setOpenCustomerListModal(false)}
-        fullWidth={true} // Adjusts the modal to take the full width of its container
-        maxWidth="md" // Can adjust to desired width (sm, md, lg, etc.)
-      >
-        <DialogTitle>Customer List</DialogTitle>
+      <Dialog open={openModal} onClose={handleCloseModal}>
         <DialogContent>
-          <CustomerList /> {/* Renders your CustomerList component 
+          <AddCustomer />
         </DialogContent>
-      </Dialog> */}
-  </Box>
-  
-  
-);
+      </Dialog>
+    </Box>
+
+
+  );
 };

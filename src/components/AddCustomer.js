@@ -1,5 +1,4 @@
 import React from 'react';
-
 import{
     Button,
     TextField,
@@ -14,10 +13,6 @@ import{
     import * as yup from 'yup';
     import CustomerService from '../services/CustomerService';
   
-
-
-
-
   const validationSchema=yup.object({
         first_name:yup.string().min(5).max(30).required(),
         last_name: yup.string().min(5).max(30).required(),
@@ -33,19 +28,17 @@ import{
         first_name:"",
         last_name: "",
         email: "",
-        
-      },
+        },
       validationSchema,
     })
     
-    //const navigate=useNavigate();
+   
      const handleSubmit=async()=>{
       try{
          CustomerService.addCustomer(formik.values).then(res_data => {
           console.log(res_data);
-        notify();
-       
-        formik.resetForm();
+          notify();
+          formik.resetForm();
        
     }).catch((error)=>{
     
@@ -64,12 +57,10 @@ return (
      
      <Card>
        <CardContent>
-      
-        <Typography sx={{fontWeight:"bold"}}>Add Customer</Typography>
+       <Typography sx={{fontWeight:"bold"}}>Add Customer</Typography>
            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
              <Grid container direction="column" spacing={2}>
-
-              <Grid item >
+                <Grid item >
                   <TextField
                    sx={{ width: "100%" }}
                    label='First Name'
@@ -123,12 +114,9 @@ return (
                       > Add Customer
                     </Button>
                     </Grid>
-                   
                    </Grid>
-                  
-               </Box>
-
-    </CardContent>
+                </Box>
+      </CardContent>
    </Card>
    </div>
    </div>

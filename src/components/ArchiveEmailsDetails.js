@@ -1,24 +1,21 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Typography, Box, Divider, } from '@mui/material';
-//import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
-//import UnarchiveTwoToneIcon from '@mui/icons-material/UnarchiveTwoTone';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
-//npm install @mui/material @mui/icons-material
+
 
 const CustomDivider = ({ ...props }) => (
   <Divider sx={{ my: 2, bgcolor: 'primary.main' }} {...props} />
 );
 
-const EmailDetails = ({ email,onRemove }) => {
-const[emailStatus,setEmailStatus]=useState(email.status);
+const EmailDetails = ({ email, onRemove }) => {
+  const [emailStatus, setEmailStatus] = useState(email.status);
   const handleClick = async () => {
     try {
-      //const newStatus = emailStatus === 'false' ? 'true' ;
-      const newStatus=!emailStatus;
+      const newStatus = !emailStatus;
       const response = await axios.patch(`http://localhost:8000/api/v1/inbox/ChangeStatus/${email.id}`, { status: newStatus });
 
       if (response.status === 200) {
@@ -30,7 +27,7 @@ const[emailStatus,setEmailStatus]=useState(email.status);
     }
   };
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const bodyPreview =
     email.body.length > 100
       ? `${email.body.substring(0, 100)}...`
@@ -39,25 +36,25 @@ const[emailStatus,setEmailStatus]=useState(email.status);
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Card sx={{ width: 900,height:200, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
-         
+        <Card sx={{ width: 900, height: 200, textAlign: 'left', margin: '15px', padding: '10px', backgroundColor: '#f7f7f7' }}>
+
           <Box
-          sx={{
-            position: 'absolute', 
-           right:10, 
-          }}
+            sx={{
+              position: 'absolute',
+              right: 10,
+            }}
           >
-          <Tooltip title="Move to Inbox" placement="right">   
-        
-          <UnarchiveIcon
-             onClick={() => handleClick()}
-            sx={{ cursor: 'pointer' }}
-            />
+            <Tooltip title="Move to Inbox" placement="right">
+
+              <UnarchiveIcon
+                onClick={() => handleClick()}
+                sx={{ cursor: 'pointer' }}
+              />
             </Tooltip>
-        </Box>
-            <CardContent>
-           <Typography variant="subtitle1" color="text.secondary" onClick={()=>navigate(`/admin/inbox/email/${email.id}`)} sx={{color:'skyblue',cursor:'pointer'}}>
-              {email.customer.first_name} {email.customer.last_name}({email.email})               
+          </Box>
+          <CardContent>
+            <Typography variant="subtitle1" color="text.secondary" onClick={() => navigate(`/admin/inbox/email/${email.id}`)} sx={{ color: 'skyblue', cursor: 'pointer' }}>
+              {email.customer.first_name} {email.customer.last_name}({email.email})
             </Typography>
             <Typography variant="h6" gutterBottom>
               {email.subject}
@@ -65,8 +62,8 @@ const[emailStatus,setEmailStatus]=useState(email.status);
             <Typography variant="subtitle2" color="text.secondary">
               Date: {email.created_at}
             </Typography>
-           <CustomDivider />
-          <Typography variant="body1">{bodyPreview}</Typography>
+            <CustomDivider />
+            <Typography variant="body1">{bodyPreview}</Typography>
           </CardContent>
         </Card>
       </Box>

@@ -1,8 +1,9 @@
-.inbox{
-    text-align: center;
+.inbox-container {
     display: flex;
-    flex-direction: column; 
-    
-    justify-content: center;
-    background-color: gray;
-}
+    flex-direction: column;
+  }
+  
+  .email-list {
+    flex: 1;
+    padding: 20px;
+  }

@@ -1,9 +1,8 @@
-//import jwt_decode from "jwt-decode";
 const sessionKey = 'adminToken';
-//const sessionUserKey = 'user';
+
 
 class AuthHelper {
-   // constructor() {}
+  
     isAuthenticated() {
         const token = this.getToken();
         if (!token) {
